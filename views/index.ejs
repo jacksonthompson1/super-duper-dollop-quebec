@@ -1,0 +1,28 @@
+<%- include('partials/html-start.ejs') %>
+
+<h1>Welcome to tha snowboard app</h1>
+
+
+    
+<p>Name: <%= myView[0].sbType %> </p>
+
+<h3> add a new board </h3>
+
+<form method="POST" action="/addBoard">
+        <label for="sbBrand">Board Name</label>
+        <input name="sbBrand" value="new board">
+        <input type="submit" value="add a board" />
+</form>  
+
+
+
+
+    <footer> sent from a file on my node server, yo!
+
+    <a href="/send">send</a>
+    
+
+
+</footer>
+
+<%- include('partials/html-end.ejs') %>
