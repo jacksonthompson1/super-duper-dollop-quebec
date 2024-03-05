@@ -5,7 +5,8 @@ const app = express();
 const port = process.env.PORT || 5500;
 const {
     MongoClient,
-    ServerApiVersion
+    ServerApiVersion,
+    ObjectId
 } = require('mongodb');
 
 // set the view engine to ejs
@@ -92,12 +93,13 @@ app.post('/updateBoard', async (req, res) => {
 
 app.post('/deleteBoard', async (req, res) => {
     try {
-        console.log("req.parms.id: ", req.params.id)
+        const sbId = req.body.id;
+        console.log("req.body.id: ", req.body.id);
 
-        await client.connect(); // Corrected to await the connect function
-        const collection = client.db("jt-quebec").collection("snowboard");
-        let result = await collection.findOneAndDelete({
-            "_id": ObjectId(req.params.id)
+        await client.connect();
+
+        let result = await client.db("jt-quebec").collection("snowboard").findOneAndDelete({
+            "_id": ObjectId(sbId)
         });
         console.log(result);
         res.redirect('/');
@@ -108,6 +110,8 @@ app.post('/deleteBoard', async (req, res) => {
         await client.close();
     }
 });
+
+
 
 
 app.listen(port, () => {

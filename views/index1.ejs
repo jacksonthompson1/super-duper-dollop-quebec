@@ -1,0 +1,52 @@
+<%- include('partials/html-start.ejs') %>
+
+    <h1>Welcome to tha snowboard app</h1>
+
+
+
+    <p>Snowboard brands: <%= sbInfo.length %>
+    </p>
+
+    <h3> add a new board </h3>
+
+    <form method="POST" action="/addBoard">
+        <label for="sbBrand">Board Brand</label>
+        <input name="sbBrand" value="new board"><br>
+        <label for="sbType">Board Type</label>
+        <input name="sbType" value="new type"><br>
+        <label for="foot"> Which foot is your main foot?</label>
+        <select id="foot" name="foot">
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+        </select>
+        <input type="submit" value="add a board">
+
+    </form>
+    <% for (var i = 0; i < sbInfo.length; i++) { %>
+    <form method="POST">
+        <input type="hidden" id="id" name="id" value="<%= sbInfo[i]._id %>"></input>
+        <label for="sbBrand">Update Board Brand: </label>
+        <input type="text" id="sbBrand" name="name" value="<%= sbInfo[i].sbBrand %>"></input>
+        <br></br>
+        <label for="sbType">New Type: </label>
+        <input type="text" id="sbType" name="sbType" value="<%= sbInfo[i].sbType %>">
+        <br><br>
+        <button class="btn btn-primary" type="submit" formaction="/updateBoard">Update VehicleData</button>
+        <button class="btn btn-danger" type="submit" formaction="/deleteBoard">Delete Vehicle Data</button>
+    </form>
+    <% } %>
+
+
+
+
+
+
+    <footer> sent from a file on my node server, yo!
+
+        <a href="/send">send</a>
+
+
+
+    </footer>
+
+    <%- include('partials/html-end.ejs') %>

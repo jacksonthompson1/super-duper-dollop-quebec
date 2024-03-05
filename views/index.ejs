@@ -1,51 +1,99 @@
 <%- include('partials/html-start.ejs') %>
 
-    <h1>Welcome to tha snowboard app</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Welcome to the snowboard app</h1>
 
+            <p>Snowboard brands: <%= sbInfo.length %></p>
 
+            <h3>Add a new board</h3>
 
-    <p>Snowboard brands: <%= sbInfo.length %>
-    </p>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="POST" action="/addBoard">
+                        <div class="form-group">
+                            <label for="sbBrand">Board Brand</label>
+                            <input type="text" class="form-control" id="sbBrand" name="sbBrand" value="new board">
+                        </div>
+                        <div class="form-group">
+                            <label for="sbType">Board Type</label>
+                            <input type="text" class="form-control" id="sbType" name="sbType" value="new type">
+                        </div>
+                        <div class="form-group">
+                            <label for="foot">Which foot is your main foot?</label>
+                            <select class="form-control" id="foot" name="foot">
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add a board</button>
+                    </form>
+                </div>
+            </div>
 
-    <h3> add a new board </h3>
+        </div>
 
-    <form method="POST" action="/addBoard">
-        <label for="sbBrand">Board Brand</label>
-        <input name="sbBrand" value="new board"><br>
-        <label for="sbType">Board Type</label>
-        <input name="sbType" value="new type"><br>
-        <label for="foot"> Which foot is your main foot?</label>
-        <select id="foot" name="foot">
-            <option value="left">Left</option>
-            <option value="right">Right</option>
-        </select>
-        <input type="submit" value="add a board">
+        <div class="col d-flex justify-content-center" class="col-md-3">
+            <div class="container-fluid">
+                <div class="card m-4 bg-secondary text-white">
+                    <h4 class="card-title">SB Jobs</h4>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Brand</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Foot</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-    </form>
+                                <% for (var i = 0; i < sbInfo.length; i++) { %>
+                                <tr>
+                                    <td>
+                                        <form id="updateForm<%= i %>" method="POST" action="/updateBoard">
+                                            <input type="hidden" name="devId" value="<%= sbInfo[i]._id %>">
 
-    <form method="POST">
-        <input type="hidden" id="id" name="id" value="<%= sbInfo[i]._id %>"></input>
-        <label for="sbBrand">Update Board Brand: </label>
-        <input type="text" id="sbBrand" name="name" value="<%= sbInfo[i].sbBrand %>"></input>
-        <br></br>
-        <label for="vehicleMileage">New Type: </label>
-        <input type="text" id="sbType" name="sbType" value="<%= sbInfo[i].sbType %>">
-        <br><br>
-        <button class="btn btn-primary" type="submit" formaction="/updateBoard">Update VehicleData</button>
-        <button class="btn btn-danger" type="submit" formaction="/deleteBoard">Delete Vehicle Data</button>
-    </form>
+                                            <input type="text" name="sbBrand" value="<%= sbInfo[i].sbBrand %>">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="sbType" value="<%= sbInfo[i].sbType %>">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="foot" value="<%= sbInfo[i].foot %>">
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary" type="submit" form="updateForm<%= i %>">Update
+                                            Board</button>
+                                        </form>
+                                        <form method="POST" action="/deleteBoard">
+                                            <input type="hidden" name="id" id="id" value="<%= sbInfo[i]._id %>">
 
+                                            <button class="btn btn-danger" type="submit">Delete Board</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+</div>
+</div>
+</div>
 
+<footer class="mt-4">
+    sent from a file on my node server, yo!
+    <a href="/send">send</a>
+</footer>
 
-
-
-    <footer> sent from a file on my node server, yo!
-
-        <a href="/send">send</a>
-
-
-
-    </footer>
-
-    <%- include('partials/html-end.ejs') %>
+<%- include('partials/html-end.ejs') %>
