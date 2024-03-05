@@ -69,15 +69,15 @@ app.post('/addBoard', async (req, res) => {
 
 app.post('/updateBoard', async (req, res) => {
     try {
-        console.log("req.parms.id: ", req.params.id)
+        console.log("body: ", req.body);
 
         await client.connect(); // Corrected to await the connect function
         const collection = client.db("jt-quebec").collection("snowboard");
         let result = await collection.findOneAndUpdate({
-            "_id": ObjectId(req.params.id)
+            "_id": ObjectId(req.body.id)
         }, {
             $set: {
-                "size": "REALLY BIG DRINK"
+                sbBrand: req.body.sbBrand ,sbType: req.body.sbType, foot: req.body.foot
             }
         });
         console.log(result);
