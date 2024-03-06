@@ -93,13 +93,12 @@ app.post('/updateBoard', async (req, res) => {
 
 app.post('/deleteBoard', async (req, res) => {
     try {
-        const sbId = req.body.id;
-        console.log("req.body.id: ", req.body.id);
+        console.log("req.body.id: ", req.body);
 
         await client.connect();
 
         let result = await client.db("jt-quebec").collection("snowboard").findOneAndDelete({
-            "_id": ObjectId(sbId)
+            "_id": ObjectId(req.body.id)
         });
         console.log(result);
         res.redirect('/');
@@ -110,6 +109,7 @@ app.post('/deleteBoard', async (req, res) => {
         await client.close();
     }
 });
+
 
 
 
